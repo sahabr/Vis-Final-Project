@@ -11,7 +11,7 @@
     border-radius: 12px;
     opacity: 0.7;
   }
-.tooltip.hidden {
+  .tooltip.hidden {
     display: none;
  }
 

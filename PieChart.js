@@ -11,6 +11,10 @@ export default function PieChart(container){
         .append('g')
         .attr('transform', 'translate('+width/2+','+height/2+')')
 
+    const group = svg
+        .append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
     function update(data,type){
         console.log(type);
 
@@ -47,18 +51,19 @@ export default function PieChart(container){
 
         var data1 = [];
         var total=0;
+
+        for (var key in select){
+            total=total+select[key];
+        }
         for (var key in select) {
             data1.push({
-                name: key,
-                value: select[key]
+                genre: key,
+                value: select[key],
+                percent: parseInt(select[key]/total*100)
             })
-            total=total+select[key];
         };
-        //console.log(total);
-        
-    
 
-        
+console.log(data1);
         const arc = d3.arc()
             .innerRadius(0)
             .outerRadius(150)
@@ -74,22 +79,22 @@ export default function PieChart(container){
             '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
             '#E64D66', '#4DB380', '#FF4D4D', '#98E6E6', '#6666FF']);
         
-        let piechart = svg.datum(data1).selectAll('path')
+        let piechart = group.datum(data1).selectAll('path')
             .data(pie);
         piechart
             .enter()
             .append('path')
             .merge(piechart)
             .on("mouseenter", (event,d) =>{
-                console.log(d);
-
                 const pos = d3.pointer(event, window);
                 d3.select('.tooltip')
                   .style('display', 'inline-block')
                   .style('top', pos[1] + 'px')
                   .style('left', pos[0] + 'px')
-                  .html(
-                    'Genre: '+ d + '<br' + 'Number of movies: '+ d[0]
+                  .html( 
+                    'Genre: ' +d.data.genre 
+                    + '<br>' + 'Number of movies: '+ d.data.value 
+                    + '<br>' + 'Percent: '+ d.data.percent + '%'
                   );
              })
             .on("mouseleave", (event, d) => {
@@ -104,7 +109,6 @@ export default function PieChart(container){
         piechart.exit().remove();
         
 
-            //.each(function(d) { this._current = d; }); // store the initial angles
 
     };
     return {
