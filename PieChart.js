@@ -98,8 +98,7 @@ console.log(data1);
                   );
              })
             .on("mouseleave", (event, d) => {
-                d3.select(".tooltip").classed("hidden", true);
-            })
+                d3.select('.tooltip').style('display', 'none');            })
             .transition()
             .style("fill", function(d, i) {
                 return color(i);

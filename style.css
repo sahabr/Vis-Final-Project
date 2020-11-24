@@ -1,6 +1,6 @@
 .tooltip {
     position: absolute;
-    display: none;
+    display:none;
     border-bottom: 1px dotted black;
     font-size: 13px;
     width: auto;
@@ -11,9 +11,7 @@
     border-radius: 12px;
     opacity: 0.7;
   }
-  .tooltip.hidden {
-    display: none;
- }
+  
 
 .tooltip p {
     margin: 0;
