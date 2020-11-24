@@ -16,14 +16,12 @@ export default function PieChart(container){
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
     function update(data,type){
-        console.log(type);
 
         var genres = [];
 
         var doNothing=0;
         var total=0;
         for (var i=0;i<data.length;i++){
-            //console.log(data[i].Age);
             if (data[i].Age===type){
                 total++;
                 if (data[i].Genres==null){
@@ -37,7 +35,6 @@ export default function PieChart(container){
                 }
             }
         }
-        console.log(total);
         
         const select ={};
         genres.forEach((el) => {
@@ -52,7 +49,6 @@ export default function PieChart(container){
 
         var data1 = [];
 
-        console.log(total);
         for (var key in select) {
             data1.push({
                 genre: key,
@@ -61,7 +57,6 @@ export default function PieChart(container){
             })
         };
 
-console.log(data1);
         const arc = d3.arc()
             .innerRadius(0)
             .outerRadius(150)
