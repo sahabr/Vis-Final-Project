@@ -21,9 +21,11 @@ export default function PieChart(container){
         var genres = [];
 
         var doNothing=0;
+        var total=0;
         for (var i=0;i<data.length;i++){
             //console.log(data[i].Age);
             if (data[i].Age===type){
+                total++;
                 if (data[i].Genres==null){
                     doNothing++;
                 }
@@ -35,7 +37,7 @@ export default function PieChart(container){
                 }
             }
         }
-        //console.log(genres);
+        console.log(total);
         
         const select ={};
         genres.forEach((el) => {
@@ -46,15 +48,11 @@ export default function PieChart(container){
                 select[el]=1;
             }
         });
-        //console.log(select);
 
 
         var data1 = [];
-        var total=0;
 
-        for (var key in select){
-            total=total+select[key];
-        }
+        console.log(total);
         for (var key in select) {
             data1.push({
                 genre: key,
@@ -98,7 +96,8 @@ console.log(data1);
                   );
              })
             .on("mouseleave", (event, d) => {
-                d3.select('.tooltip').style('display', 'none');            })
+                d3.select('.tooltip').style('display', 'none'); 
+            })
             .transition()
             .style("fill", function(d, i) {
                 return color(i);
