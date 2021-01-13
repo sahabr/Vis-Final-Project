@@ -1,58 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Vis Final Project Pie Chart</title>
-
-    <!-- Load CSS files -->
-    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.7">
 
     <!-- Milligram CSS -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
 
-   
     <!-- Load Javascript files -->
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.1.1/d3.min.js"></script>
+    <script defer src="https://unpkg.com/topojson@3"></script>
+
 
     <!-- Your code -->
-    <script src="script.js" defer type="module"></script>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/bubble_density_style.css">
+    <link rel="stylesheet" href="css/fullpage.css">
+    <link rel="stylesheet" href="css/style.css" />
 
-  </head>
-  <body>
- 
+    <script defer src="main.js" type="module"></script>
+    
 
-  <div class="container">
-    <h1>Genres by Content Rating</h1>
+    <title>Final Project: Rise of Streaming Platform</title>
 
-    <label for="group-by">Group By</label>
-    <select id="group-by">
-        <option value="all">All Ages</option>
-        <option value="7+">7+</option>
-        <option value="13+">13+</option>
-        <option value="16+">16+</option>
-        <option value="18+">18+</option>v
-    </select>
-    <div id="platform">
-      <button value="All">All</button>
-      <button value="Netflix">Netflix</button>
-      <button value="Hulu">Hulu</button>
-      <button value="Prime Video">Prime Video</button>
-      <button value="Disney+">Disney+</button>
-  </div>
-</div>
+</head>
+<body>
+    <div id="fullpage">
+        <section class='section'>
+            <h1>
+                Rise of Streaming Platforms 
+            </h1>
+            <img class='image' src="img/streaming_platforms.png" alt="streaming_platforms"/>
+            <br>
+            <a href="about.html" class='a-link' style =  "color:orange; font-size: 1.5em; font-weight:bold;">Project Info</a>
+            <h4>By Mooyeong Lee, Sung Joon Park, Brishti Saha, and Ga Young Lee</h4>
+        </section>
 
-<div class="pie"></div><div class='tooltip'></div>
-  </div>
+        <section class="section" id="page-intro">
+            <div class="slide active">
+                <h1>Do you like watching movies?</h1>
+            </div>
+            <div class="slide">
+                <h1>Do you like binge watching on the weekend?</h1>
+            </div>
+            <div class="slide">
+                <h1>
+                    Do you get lazy getting out of your <br><br> bed to go to a movie theatre?
+                </h1>
+            </div>
+            <div class="slide">
+                <h1 class="smallfont">
+                    Then you are not alone! <br><br>
+                    There has been a rise in streaming platform users <br> just like you.<br>   
+                </h1>
+            </div>
+            <div class="slide">
+                <h1>
+                    Scroll Down to see more details with some statistics
+                    <br><br>
+                    👇👇👇
+                </h1>
+            </div>
+        </section>
+
+        <!-- Line Chart -->
+        <section class='section line-grid-container'>
+            <h1 class='header'>
+                Movie Tickets & Netflix Subscription Trend 
+            </h1>
+            <section class='vis-container'>
+                <div id='line-chart-container' class = 'line-container'></div>
+                <div id='line-chart-container1' class = 'line-container'></div>
+                <div class='tooltip-line'></div>
+                <div class='tooltip-line1'></div>
+            </section>
+            <p class='content-box'>
+                In today's world, people have been shifting from going to theaters to using streaming platforms at home. 
+                <br>
+                Consumers can  access their favorite shows more easily, without going to theaters or waiting for broadcasting schedule. 
+                <br><br>
+                In the US, the number of movie tickets sold has been generally decreasing while Netflix subscriptions have been increasing. 
+                <br><br>
+                The gap between the two are growing even more due to COVID-19 pandemic making people stay at home. 
+            </p>
+        </section>
+
+        <!-- Map Chart -->
+        <section class='section'>
+            <h1 class='header'>Exploring Movie & Product info by countries</h1>
+            <section class='vis-container'>
+                <div id='map-chart-container'>
+                    <!-- Map Chart goes here -->
+                    <div id="map-tooltip">
+                    </div>
+                </div>
+                <article class='side-charts'>
+                    <h3 id="Map-Country">Country</h3>
+                    <h4 id='Average-h4'>Average ratings for shows</h4>
+                    <div class='rating-container'>
+                        <div id='IMDB-chart-container'>
+                            <!-- IMDB Visualization -->
+                        </div>
+                        <div id='Rotten-tomato-container'>
+                            <!-- Rotten tomato container -->
+                        </div>
+                    </div>
+                    <div id='bar-chart-container'>
+                        <h4>Movie Count By Platform</h4>
+                        <!-- Bar Chart on the side -->
+                    </div>
+                </article>
+            </section>
+        </section>
+
+         <!-- Bubble Chart -->
+         <section class='section'>
+            <h1>Movies on Netflix</h1>
+            <article class="vis-container">
+                <div id='bubble-chart-container'>
+                    <div class="bubble">
+                        <div id="tooltip2" class="hidden">
+                            <p id="heading"><strong>Movie:</strong></p>
+                            <p id="title" class="inputs">t</p>
+                            <p id="heading"><strong><span>Genre:</span></strong></p>
+                            <p id="genre" class="inputs">g</p>
+                             <p id="heading"><strong><span>IMDb:</span></strong></p>
+                            <p id="rating" class="inputs">0</p>
+                        </div>
+                    </div>
+                    <button type="button" id="play-button" class="btn
+                        play_btn btn-primary">
+                        Next&nbsp;&nbsp;▶
+                    </button>
+                    <div id="slider" class="slider"></div>
+                </div>
+                <div class='side-charts'>
+                    <div id="box">
+                        <p id="heading-1"></p>
+                        <p id="comment-1"></p>
+                    </div>
+                    <div class="density">
+                        <div id="tooltip" class="hidden">
+                            <p id="heading"><strong>Runtime:</strong></p>
+                            <p id="runtime" class="inputs">0</p>
+                            <p id="heading"><strong><span>Count:</span></strong></p>
+                            <p id="count" class="inputs">0</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- Pie Chart -->
+        <section class='section'>
+            <h1 class = 'header'>Genres by Content Rating</h1>
+            <section class='vis-container'>
+                <div id='pie-chart-container'>
+                    <label for="group-by">Group By</label>
+                    <select id="group-by">
+                        <option value="all">All Ages</option>
+                        <option value="7+">7+</option>
+                        <option value="13+">13+</option>
+                        <option value="16+">16+</option>
+                        <option value="18+">18+</option>v
+                    </select>
+                    <div id="platform">
+                        <button value="All" class=button-pie>All</button>
+                        <button value="Netflix" class=button-pie>Netflix</button>
+                        <button value="Hulu" class=button-pie>Hulu</button>
+                        <button value="Prime Video" class=button-pie>Prime Video</button>
+                        <button value="Disney+" class=button-pie>Disney+</button>
+                    </div>
+                </div>
+                <div class='tooltip-pie'></div>
+            </section>
+            <p class='content-box'>
+                Different platforms have different target audiences, more specifically based on age and genre preference.
+                <br>
+                The pie chart breaks down what genres are popular in different platforms. 
+                <br>
+                The pie chart also shows how the different genres differ based on age.
+                <br>
+                Different genres are popular among different age groups and streaming platforms need to have an understanding of what genres are popular among their target audience based on their age.
+            </p>
+        </section>
+
+        <!-- Outro -->
+        <section class='section'>
+            <h1 id='outro-header' class="header"> So will streaming platform continue to rise?</h1>
+            <div class='outro-container'>
+                <img id="outro-image" class='outro-el image' src="img/outro.jpeg" alt='outro-image'/>
+                <p id='outro-paragraph'class='content-box outro-el' >
+                        With various streaming platforms gaining popularity in today's world, streaming service market is set to grow more in the future.
+                        
+                        <br><br>
+                        As all our team members love using these platforms, we wanted to provide meaningful information and trends regrading this market. 
+                        We hope you enjoyed exploring the streaming service market!
+                </p>
+            </div>
+        </article>
+    </section>
 
 
-        
+    <div class="container" id="page-outro">
+        <div class="text-block">
+          <p>
+              With the rising popularity and importance of various streaming platforms including Netflix 
+              and Disney+ , OTT market has been evidently growing and the consumers are able to access 
+              their favorite shows more easily.
+              
+          </p>
+      </br>
+          <p>
+              These growths have so much to offer to the companies as well as the
+              consumers such as providing emotional relief. As people who received these values 
+              ourselves, we hope to provide meaningful information and trends regarding movies on multiple streaming platforms and
+              hope that the OTT market continues to expand and provide positive 
+              utilities to its consumers.
+          </p>
+        </div>
 
 
-  </body>
-  
-  </html>
+</body>
+</html>
